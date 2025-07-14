@@ -14,6 +14,7 @@ import os
 import urllib.request
 import json
 import zipfile
+import argparse
 
 
 ########################################################################################
@@ -43,12 +44,23 @@ def display_progress_bar(block_num, block_size, total_size, message=""):
 
 def main():
     """"""
+    parser = argparse.ArgumentParser(
+        description="Download and extract data from Dryad."
+    )
+    parser.add_argument(
+        "--data_dir",
+        type=str,
+        default="data/",
+        help="Directory to download data into (default: data/)",
+    )
+    args = parser.parse_args()
+
     DRYAD_DOI = "10.5061/dryad.dncjsxm85"
 
     ## Make sure the command is being run from the right place and we can see the data/
     ## directory.
 
-    DATA_DIR = "data/"
+    DATA_DIR = args.data_dir
     data_dirpath = os.path.abspath(DATA_DIR)
     assert os.getcwd().endswith(
         "nejm-brain-to-text"
